@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>로그인 페이지</h1>
+    <form action="/" id="login-form">
+        <div>
+            <label>
+                <span style="display: inline-block; width: 100px">ID:</span>
+                <input type="text" placeholder="아이디를 넣어주세요" name="userid" id="id">
+            </label>
+        </div>
+        <div>
+            <label>
+                <span style="display: inline-block; width: 100px">PASSWORD :</span>
+                <input type="password" placeholder="비밀번호를 넣어주세요" name="password" id="password">
+                <!--  type="password"  << 비밀번호 ㅇㅇㅇ 만들기 -->
+            </label>
+        </div>
+        <div><button id="submit-button" type="submit">로그인</button></div>
+    </form>
+</body>
+
+</html>
+
+<script>
+    document.getElementById("login-form").addEventListener("submit", (event) => {
+        event.preventDefault()
+
+        const data = {
+            email: document.getElementById('id').value,
+            password: document.getElementById('password').value
+        }
+
+        fetch("http://localhost:7100/login", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        }).then((response) => response.json())
+            .then((data) => {
+                location.href = "/"
+            }).catch((error) => {
+                // console.log(error) 필 수 확 인
+                alert("너 계정 없는데?")
+            })
+    })
+</script>
+

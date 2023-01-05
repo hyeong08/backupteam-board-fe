@@ -1,18 +1,28 @@
 const express = require('express')
+const cors = require('cors')
 
 const app = express()
-const port = 3000
+const port = 7000
 
-app.get('/home', (req,res) => {
-    res.send('home')
+app.use(express.json())
+
+let corsOptions = {
+    origin: 'http://localhost:7100',
+    credentials: true
+}
+
+app.use(cors(corsOptions))
+
+app.get('/', (req,res) => {
+    res.sendFile(__dirname + "/html/home.html")
 })
 
 app.get('/login', (req,res) => {
-    res.send('login')
+    res.sendFile(__dirname + "/html/login.html")
 })
 
 app.get('/profile', (req,res) => {
-    res.send('profile')
+    res.sendFile(__dirname + "/html/profile.html")
 })
 
 app.listen(port, () => {
