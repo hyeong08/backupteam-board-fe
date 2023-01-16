@@ -9,30 +9,146 @@
 </head>
 <body>
     <h1>게시판</h1>
+    <div class="btn">
+        <a href="articles">글쓰기</a>
+        <a href="users">마이페이지</a>
+        <a href="login">로그인</a>
+    </div>
     <table style="border: 1px solid black; width: 100%" id="article-table">
         <tr>
-            <th style="border: 1px solid black">ID</th>
             <th style="border: 1px solid black">제목</th>
             <th style="border: 1px solid black">내용</th>
             <th style="border: 1px solid black">작성일시</th>
             <th style="border: 1px solid black">조횟수</th>
         </tr>
     </table>
+    <div id = "pagination">
+        
+    </div>
 </body>
 </html>
 <script>
-    fetch("http://localhost:7100/").then((response) => response.json()).then(articles => {
-        for(let i = 0; i < articles.length; i++) {
-            const row = `<td style="border: 1px solid black">${articles[i].id}</td>
-            <td style="border: 1px solid black">${articles[i].title}</td>
-            <td style="border: 1px solid black">${articles[i].contents}</td>
-            <td style="border: 1px solid black">${articles[i].created_at}</td>
-            <td style="border: 1px solid black">${articles[i].id}</td>`
+    let query = window.location.search;
+    let param = new URLSearchParams(query);
+    let page = Number(param.get('page'));
 
-            const tr = document.createElement("tr")
-            tr.innerHTML = row
-            document.getElementById("article-table").appendChild(tr)
-        }
+    if (!page || page === 1) {
+        fetch("http://localhost:7100/articles").then((response) => response.json()).then(articles => {
+            for (let i = 0; i < articles.rows.length; i++) {
+                const row = `
+            <td style="border: 1px solid black">${articles.rows[i].title}</td>
+            <td style="border: 1px solid black">${articles.rows[i].contents}</td>
+            <td style="border: 1px solid black">${articles.rows[i].created_at}</td>
+            <td style="border: 1px solid black">${articles.rows[i].count}</td>`
 
-    })
+                const tr = document.createElement("tr")
+                tr.innerHTML = row
+                document.getElementById("article-table").appendChild(tr)
+            }
+
+            const pages = `
+            <a class="link_page" href="/?page=1">1</a>
+            <a class="link_page" href="/?page=2">2</a>
+            <a class="link_page" href="/?page=3">3</a>
+            <a class="link_page" href="/?page=4">...</a>
+            <a class="link_page" href="/?page=${articles.lastPage}">${articles.lastPage}</a>
+            `
+
+            const a = document.createElement("a")
+            a.innerHTML = pages
+            document.getElementById("pagination").appendChild(a)
+
+        })
+
+    } else {
+        fetch(`http://localhost:7100/articles?page=${page}`).then((response) => response.json()).then(articles => {
+            for (let i = 0; i < articles.rows.length; i++) {
+                const row = `
+            <td style="border: 1px solid black">${articles.rows[i].title}</td>
+            <td style="border: 1px solid black">${articles.rows[i].contents}</td>
+            <td style="border: 1px solid black">${articles.rows[i].created_at}</td>
+            <td style="border: 1px solid black">${articles.rows[i].count}</td>`
+
+                const tr = document.createElement("tr")
+                tr.innerHTML = row
+                document.getElementById("article-table").appendChild(tr)
+            }
+
+
+            if (page === 3) {
+                const pages = `
+            <a class="link_page" href="/?page=1">1</a>
+            <a class="link_page" href="/?page=2">2</a>
+            <a class="link_page" href="/?page=${page}">${page}</a>
+            <a class="link_page" href="/?page=4">4</a>
+            <a class="link_page" href="/?page=5">...</a>
+            <a class="link_page" href="/?page=${articles.lastPage}">${articles.lastPage}</a>
+            `
+                const a = document.createElement("a")
+                a.innerHTML = pages
+                document.getElementById("pagination").appendChild(a)
+
+            } else if (page === articles.lastPage) {
+
+                const pages = `
+            <a class="link_page" href="/?page=1">1</a>
+            <a class="link_page" href="/?page=${page - 2}">...</a>
+            <a class="link_page" href="/?page=${page - 1}">${page - 1}</a>
+            <a class="link_page" href="/?page=${page}">${page}</a>
+            `
+                const a = document.createElement("a")
+                a.innerHTML = pages
+                return document.getElementById("pagination").appendChild(a)
+
+            } else if (page === articles.lastPage - 1) {
+                const pages = `
+            <a class="link_page" href="/?page=1">1</a>
+            <a class="link_page" href="/?page=${page - 2}">...</a>
+            <a class="link_page" href="/?page=${page - 1}">${page - 1}</a>
+            <a class="link_page" href="/?page=${page}">${page}</a>
+            `
+                const a = document.createElement("a")
+                a.innerHTML = pages
+                return document.getElementById("pagination").appendChild(a)
+            } else if (page === articles.lastPage - 2) {
+                const pages = `
+            <a class="link_page" href="/?page=1">1</a>
+            <a class="link_page" href="/?page=${page - 2}">...</a>
+            <a class="link_page" href="/?page=${page - 1}">${page - 1}</a>
+            <a class="link_page" href="/?page=${page}">${page}</a>
+            `
+                const a = document.createElement("a")
+                a.innerHTML = pages
+                return document.getElementById("pagination").appendChild(a)
+            } else if (page < 3) { //1은 위에서 이미 처리  2
+                const pages = `
+            <a class="link_page" href="/?page=1">1</a>
+            <a class="link_page" href="/?page=${page}">${page}</a>
+            <a class="link_page" href="/?page=3">3</a>
+            <a class="link_page" href="/?page=4">...</a>
+            <a class="link_page" href="/?page=${articles.lastPage}">${articles.lastPage}</a>
+            `
+                const a = document.createElement("a")
+                a.innerHTML = pages
+                return document.getElementById("pagination").appendChild(a)
+            } else if (page > 3) {
+                const pages = `
+            <a class="link_page" href="/?page=1">1</a>
+            <a class="link_page" href="/?page=${page-2}">...</a>
+            <a class="link_page" href="/?page=${page-1}">${page-1}</a>
+            <a class="link_page" href="/?page=${page}">${page}</a>
+            <a class="link_page" href="/?page=${page + 1}">${page + 1}</a>
+            <a class="link_page" href="/?page=${page+2}">...</a>
+            <a class="link_page" href="/?page=${articles.lastPage}">${articles.lastPage}</a>
+            `
+                const a = document.createElement("a")
+                a.innerHTML = pages
+                return document.getElementById("pagination").appendChild(a)
+            }
+
+        })
+
+    }
+
+
 </script>

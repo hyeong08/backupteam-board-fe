@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>게시글 작성</h1>
+    <form action="/" id="article-form">
+    <table>
+        <tr>
+            <td>제목</td>
+            <td><input type="text" name="subject"></td>
+        </tr>
+        <tr>
+            <td>내용</td>
+            <td>
+                <textarea name="content"></textarea>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="글쓰기">
+    </form>
+</body>
+</html>
+
+<script>
+    document.getElementById("article-form").addEventListener("submit", (event) => {
+        event.preventDefault()
+
+        const data = {
+            title: document.getElementById("title").value,
+            contents: document.getElementById("contents").value
+        }
+
+        fetch("http://localhost:7100/articles", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        }).then((response) => response.json())
+            .then((data) => {
+                location.href = "/"
+            }).catch((error) => {
+                console.log(error) // 필 수 확 인
+                alert("err")
+            })
+    })
+</script>

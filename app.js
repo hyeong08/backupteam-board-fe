@@ -1,17 +1,17 @@
 const express = require('express')
-const cors = require('cors')
+// const cors = require('cors')
 
 const app = express()
 const port = 7000
 
 app.use(express.json())
 
-let corsOptions = {
-    origin: 'http://localhost:7100',
-    credentials: true
-}
+// let corsOptions = {
+//     origin: 'http://localhost:7100',
+//     credentials: true
+// }
 
-app.use(cors(corsOptions))
+// app.use(cors(corsOptions))
 
 app.get('/', (req,res) => {
     res.sendFile(__dirname + "/html/home.html")
@@ -19,6 +19,10 @@ app.get('/', (req,res) => {
 
 app.get('/login', (req,res) => {
     res.sendFile(__dirname + "/html/login.html")
+})
+
+app.get('/articles', (req,res) => {
+    res.sendFile(__dirname + "/html/write.html")
 })
 
 app.get('/profile', (req,res) => {
