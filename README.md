@@ -1,8 +1,1 @@
-javascript fetch
-
-respository name : backupteam-board-fe
-
-get
-/home
-/login
-/profile
+정예반 게시판 프론트
