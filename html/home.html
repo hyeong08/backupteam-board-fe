@@ -33,7 +33,9 @@
     let page = Number(param.get('page'));
 
     if (!page || page === 1) {
-        fetch("http://localhost:7100/articles").then((response) => response.json()).then(articles => {
+        fetch("http://localhost:7100/articles")
+        .then((response) => response.json())
+        .then(articles => {
             for (let i = 0; i < articles.rows.length; i++) {
                 const row = `
             <td style="border: 1px solid black">${articles.rows[i].title}</td>
@@ -51,7 +53,7 @@
             <a class="link_page" href="/?page=2">2</a>
             <a class="link_page" href="/?page=3">3</a>
             <a class="link_page" href="/?page=4">...</a>
-            <a class="link_page" href="/?page=${articles.lastPage}">${articles.lastPage}</a>
+            <a class="link_page" href="/?page=${articles.pageInfo.lastPage}">${articles.pageInfo.lastPage}</a>
             `
 
             const a = document.createElement("a")
@@ -82,7 +84,7 @@
             <a class="link_page" href="/?page=${page}">${page}</a>
             <a class="link_page" href="/?page=4">4</a>
             <a class="link_page" href="/?page=5">...</a>
-            <a class="link_page" href="/?page=${articles.lastPage}">${articles.lastPage}</a>
+            <a class="link_page" href="/?page=${articles.pageInfo.lastPage}">${articles.pageInfo.lastPage}</a>
             `
                 const a = document.createElement("a")
                 a.innerHTML = pages
@@ -126,7 +128,7 @@
             <a class="link_page" href="/?page=${page}">${page}</a>
             <a class="link_page" href="/?page=3">3</a>
             <a class="link_page" href="/?page=4">...</a>
-            <a class="link_page" href="/?page=${articles.lastPage}">${articles.lastPage}</a>
+            <a class="link_page" href="/?page=${articles.pageInfo.lastPage}">${articles.pageInfo.lastPage}</a>
             `
                 const a = document.createElement("a")
                 a.innerHTML = pages
@@ -139,7 +141,7 @@
             <a class="link_page" href="/?page=${page}">${page}</a>
             <a class="link_page" href="/?page=${page + 1}">${page + 1}</a>
             <a class="link_page" href="/?page=${page+2}">...</a>
-            <a class="link_page" href="/?page=${articles.lastPage}">${articles.lastPage}</a>
+            <a class="link_page" href="/?page=${articles.pageInfo.lastPage}">${articles.pageInfo.lastPage}</a>
             `
                 const a = document.createElement("a")
                 a.innerHTML = pages
