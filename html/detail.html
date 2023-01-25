@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1><a href="/">게시판</a></h1>
+    <table style="border: 1px solid black; width: 100%" id="detail-table"></table>
+  </body>
+</html>
+
+<script>
+  const id = window.location.pathname.slice(8)
+
+  fetch(`http://localhost:7100/articles/${id}`, {credentials: 'include'})
+    .then((response) => response.json())
+    .then((post) => {
+      const row = `
+        <th style="border: 1px solid black;">${post.title}</th>
+        <td style="border: 1px solid black;">${post.contents}</td>
+        `
+      const tr = document.createElement('tr');
+      tr.innerHTML = row;
+      document.getElementById('detail-table').appendChild(tr);
+    });
+</script>

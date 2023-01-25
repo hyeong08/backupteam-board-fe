@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h1>게시글 수정</h1>
+    <div id="form">
+    <form action="" id="modify-form">
+        <div>
+            <label>
+                <span style="display: inline-block; width: 100px">제목:</span>
+                <input type="text" value="" id="title" style="display: block;" required>
+            </label>
+        </div>
+        <div>
+            <label>
+                <span style="display: inline-block; width: 100px">내용:</span>
+                <textarea name="contents" id="contents" cols="30" rows="10" style="display: block;" required></textarea>
+            </label>
+        </div>
+        <br>
+    <button type="submit">수정</button>
+    <button><a href="/">취소</a></button>
+    </form>
+  </div>
+  </body>
+  </html>
+</html>
+<script>
+    const id = window.location.pathname.split("/")[2]
+
+    document.getElementById('modify-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const data = {
+      title: document.getElementById('title').value,
+      contents: document.getElementById('contents').value,
+    };
+
+    fetch(`http://localhost:7100/articles/${id}`, {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // alert(data)
+        alert('수정 완료');
+        location.href = '/';
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('아니야');
+      });
+  });
+</script>

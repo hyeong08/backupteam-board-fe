@@ -11,8 +11,6 @@
     <table id="info-table" style="border: 1px solid black;">
         <tr>
             <th style="border: 1px solid black;">name</th>
-        </tr>
-        <tr>
             <th style="border: 1px solid black;">email</th>
         </tr>
     </table>
@@ -23,10 +21,11 @@
     credentials: "include"
     })
      .then(response => response.json())
-     .then(({inFo}) => {
+     .then((inFo) => {
         const row = `
         <td style="border: 1px solid black;">${inFo.name}</td>
-        <td style="border: 1px solid black;">${inFo.email}</td>` 
+        <td style="border: 1px solid black;">${inFo.email}</td>`
+        
         const tr = document.createElement("tr")
         tr.innerHTML = row
         document.getElementById("info-table").appendChild(tr)

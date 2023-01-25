@@ -28,6 +28,14 @@ app.get('/profile', (req,res) => {
     res.sendFile(__dirname + "/html/profile.html")
 })
 
+app.get("/detail/:id", (req,res) =>{
+    res.sendFile(__dirname + "/html/detail.html")
+})
+
+app.get('/articles/:id', (req,res) => {
+    res.sendFile(__dirname + '/html/modify.html')
+})
+
 app.listen(port, () => {
     console.log(port, '서버 실행')
-} )
+})
