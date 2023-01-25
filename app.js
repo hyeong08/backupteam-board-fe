@@ -12,7 +12,6 @@ app.use(express.json())
 // }
 
 // app.use(cors(corsOptions))
-
 app.get('/', (req,res) => {
     res.sendFile(__dirname + "/html/home.html")
 })
@@ -21,7 +20,7 @@ app.get('/login', (req,res) => {
     res.sendFile(__dirname + "/html/login.html")
 })
 
-app.get('/articles', (req,res) => {
+app.get('/write', (req,res) => {
     res.sendFile(__dirname + "/html/write.html")
 })
 

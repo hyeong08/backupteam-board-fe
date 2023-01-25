@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <h1>로그인 페이지</h1>
+    <h1>로그인</h1>
     <form action="/" id="login-form">
         <div>
             <label>
@@ -25,7 +25,10 @@
                 <!--  type="password"  << 비밀번호 ㅇㅇㅇ 만들기 -->
             </label>
         </div>
-        <div><button id="submit-button" type="submit">로그인</button></div>
+        <div><button id="submit-button" type="submit">로그인</button>
+            <button id="submit-button" type="submit"><a href="/">취소</a></button>
+        </div>
+        
     </form>
 </body>
 
@@ -49,10 +52,12 @@
             body: JSON.stringify(data)
         }).then((response) => response.json())
             .then((data) => {
+                alert(data.message)
                 location.href = "/"
             }).catch((error) => {
                 console.log(error) // 필 수 확 인
                 alert("없습니다")
+                window.location.reload()
             })
     })
 </script>
