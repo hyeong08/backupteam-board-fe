@@ -10,9 +10,15 @@
     <h1><a href="/">내 정보</a></h1>
     <table id="info-table" style="border: 1px solid black;">
         <tr>
-            <th style="border: 1px solid black;">name</th>
-            <th style="border: 1px solid black;">email</th>
+          <th style="border: 1px solid black;">name</th>
+          <th style="border: 1px solid black;">email</th>
         </tr>
+    </table>
+    <table id="myposts-table" style="border: 1px solid black;">
+      <tr>
+        <th style="border: 1px solid black;">title</th>
+        <th style="border: 1px solid black;">contents</th>
+      </tr>
     </table>
 </body>
 </html>
@@ -29,5 +35,15 @@
         const tr = document.createElement("tr")
         tr.innerHTML = row
         document.getElementById("info-table").appendChild(tr)
+
+        for (let i = 0; i < inFo.articles.length; i++){
+          const a = `
+            <td style="border: 1px solid black;">${inFo.articles[i].title}</td>
+            <td style="border: 1px solid black;">${inFo.articles[i].contents}</td>` 
+  
+          const t = document.createElement("tr")
+          t.innerHTML = a
+          document.getElementById("myposts-table").appendChild(t)
+      }
     })
 </script>
